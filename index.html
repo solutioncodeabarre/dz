@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Code à Barre</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #121c24;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .navbar h1 span {
+            color: #e67e22;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar ul li a:hover {
+            color: #e67e22;
+        }
+
+        .content-wrapper {
+            margin-top: 110px;
+            padding: 0 5%;
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+            color: #121c24;
+            font-size: 2.2rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: #e67e22;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 70px;
+        }
+
+        .product-card {
+            background: #ffffff;
+            padding: 40px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-bottom: 4px solid #ecf0f1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-bottom-color: #e67e22;
+        }
+
+        .product-card h3 {
+            color: #121c24;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .product-card p {
+            color: #576574;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .contact-container {
+            margin-bottom: 70px;
+        }
+
+        .contact-common {
+            text-align: center;
+            background-color: #121c24;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-common a {
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+            margin-left: 10px;
+        }
+
+        .contact-common a:hover {
+            color: #f39c12;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            padding: 35px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-top: 5px solid #2980b9;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-card h3 {
+            color: #121c24;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-bottom: 2px dashed #ecf0f1;
+            padding-bottom: 15px;
+        }
+
+        .contact-card ul {
+            list-style: none;
+        }
+
+        .contact-card ul li {
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .contact-card ul li span {
+            font-size: 1.4rem;
+            margin-right: 15px;
+        }
+
+        .contact-card a {
+            color: #2980b9;
+            text-decoration: none;
+            transition: color 0.3s;
+            word-break: break-all;
+        }
+
+        .contact-card a:hover {
+            color: #e67e22;
+        }
+
+        .maps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 70px;
+        }
+
+        .map-box {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .map-box h3 {
+            text-align: center;
+            color: #121c24;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .map-box iframe {
+            width: 100%;
+            height: 380px;
+            border-radius: 8px;
+            border: 1px solid #ecf0f1;
+            display: block;
+        }
+
+        footer {
+            background-color: #121c24;
+            color: #bdc3c7;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 1rem;
+            border-top: 4px solid #e67e22;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+
+            .navbar ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .content-wrapper {
+                margin-top: 140px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin: 40px 0 30px;
+            }
+
+            .contact-common {
+                font-size: 1.1rem;
+                padding: 20px 15px;
+            }
+
+            .contact-common a {
+                display: block;
+                margin-top: 10px;
+                margin-left: 0;
+            }
+
+            .product-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <h1>Solution <span>Code à Barre</span></h1>
+        <ul>
+            <li><a href="#products">Nos Produits</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#locations">Nos Magasins</a></li>
+        </ul>
+    </nav>
+
+    <div class="content-wrapper">
+
+        <h2 id="products" class="section-title">Nos Produits</h2>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <h3>🖨️ Imprimantes Ticket de Caisse</h3>
+                <p>Idéales pour les points de vente, supermarchés et restaurants. Impression thermique rapide et fiable.</p>
+            </div>
+            
+            <div class="product-card">
+                <h3>🔍 Douchettes Code à Barre</h3>
+                <p>Lecteurs portables ergonomiques pour un scan rapide et précis de vos articles en caisse ou en stock.</p>
+            </div>
+            
+            <div class="product-card">
+                <h3>📟 Scanners Code à Barre</h3>
+                <p>Scanners de bureau omnidirectionnels haute performance, parfaits pour les supermarchés à fort trafic.</p>
+            </div>
+            
+            <div class="product-card">
+                <h3>🏷️ Imprimantes Code à Barre</h3>
+                <p>Imprimez vos propres étiquettes avec précision pour une gestion de stock optimale.</p>
+            </div>
+            
+            <div class="product-card">
+                <h3>📜 Étiquettes</h3>
+                <p>Rouleaux d'étiquettes thermiques et papier de différentes tailles, adaptables à toutes vos imprimantes.</p>
+            </div>
+            
+            <div class="product-card">
+                <h3>⚖️ Balances Code à Barre</h3>
+                <p>Balances professionnelles avec impression de codes à barres uniquement, idéales pour la pesée en rayon et boucherie.</p>
+            </div>
+        </div>
+
+        <h2 id="contact" class="section-title">Contactez-nous</h2>
+
+        <div class="contact-container">
+            <div class="contact-common">
+                📞 Ligne Globale (Alger / Skikda) : <a href="tel:0556236219">0556 23 62 19</a>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>📍 Magasin Alger</h3>
+                    <ul>
+                        <li><span>📞</span> <a href="tel:0770727124">0770 72 71 24</a></li>
+                        <li><span>📞</span> <a href="tel:0770727157">0770 72 71 57</a></li>
+                        <li><span>✉️</span> <a href="mailto:systeme.code.a.barre16@gmail.com">systeme.code.a.barre16@gmail.com</a></li>
+                    </ul>
+                </div>
+
+                <div class="contact-card">
+                    <h3>📍 Magasin Skikda</h3>
+                    <ul>
+                        <li><span>📞</span> <a href="tel:0770727167">0770 72 71 67</a></li>
+                        <li><span>✉️</span> <a href="mailto:solution.code.a.barre@gmail.com">solution.code.a.barre@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h2 id="locations" class="section-title">Nos Magasins</h2>
+        
+        <div class="maps-grid">
+            <div class="map-box">
+                <h3>📍 Magasin Alger</h3>
+                <iframe src="https://maps.google.com/maps?q=36.722667,3.165167&hl=fr&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="map-box">
+                <h3>📍 Magasin Skikda</h3>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.6268077645313!2d6.909657974702161!3d36.87535066346155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f1c54e3c2e5a4f%3A0x3b7419ca78bb3f1b!2sMagasin%20Solution%20Code%20%C3%A0%20Barre!5e0!3m2!1sfr!2sdz!4v1773067472279!5m2!1sfr!2sdz" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>
