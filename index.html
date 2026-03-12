@@ -1,384 +1,579 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Code à Barre</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f7f6;
-            color: #2c3e50;
-            line-height: 1.6;
-        }
-
-        .navbar {
-            background-color: #121c24;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .navbar h1 {
-            color: #ffffff;
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-
-        .navbar h1 span {
-            color: #e67e22;
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
-
-        .navbar ul li a {
-            color: #ecf0f1;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar ul li a:hover {
-            color: #e67e22;
-        }
-
-        .content-wrapper {
-            margin-top: 110px;
-            padding: 0 5%;
-            max-width: 1300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin: 60px 0 40px;
-            color: #121c24;
-            font-size: 2.2rem;
-            font-weight: 700;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 4px;
-            background: #e67e22;
-            margin: 15px auto 0;
-            border-radius: 2px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 70px;
-        }
-
-        .product-card {
-            background: #ffffff;
-            padding: 40px 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
-            text-align: center;
-            transition: all 0.3s ease;
-            border-bottom: 4px solid #ecf0f1;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-bottom-color: #e67e22;
-        }
-
-        .product-card h3 {
-            color: #121c24;
-            margin-bottom: 15px;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .product-card p {
-            color: #576574;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        .contact-container {
-            margin-bottom: 70px;
-        }
-
-        .contact-common {
-            text-align: center;
-            background-color: #121c24;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #ffffff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .contact-common a {
-            color: #e67e22;
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.3s;
-            margin-left: 10px;
-        }
-
-        .contact-common a:hover {
-            color: #f39c12;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .contact-card {
-            background: #ffffff;
-            padding: 35px 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border-top: 5px solid #2980b9;
-            transition: transform 0.3s ease;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .contact-card h3 {
-            color: #121c24;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: 700;
-            border-bottom: 2px dashed #ecf0f1;
-            padding-bottom: 15px;
-        }
-
-        .contact-card ul {
-            list-style: none;
-        }
-
-        .contact-card ul li {
-            margin-bottom: 18px;
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-
-        .contact-card ul li span {
-            font-size: 1.4rem;
-            margin-right: 15px;
-        }
-
-        .contact-card a {
-            color: #2980b9;
-            text-decoration: none;
-            transition: color 0.3s;
-            word-break: break-all;
-        }
-
-        .contact-card a:hover {
-            color: #e67e22;
-        }
-
-        .maps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 70px;
-        }
-
-        .map-box {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
-
-        .map-box h3 {
-            text-align: center;
-            color: #121c24;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .map-box iframe {
-            width: 100%;
-            height: 380px;
-            border-radius: 8px;
-            border: 1px solid #ecf0f1;
-            display: block;
-        }
-
-        footer {
-            background-color: #121c24;
-            color: #bdc3c7;
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 1rem;
-            border-top: 4px solid #e67e22;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 15px 20px;
-                gap: 15px;
-            }
-
-            .navbar ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-
-            .content-wrapper {
-                margin-top: 140px;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-                margin: 40px 0 30px;
-            }
-
-            .contact-common {
-                font-size: 1.1rem;
-                padding: 20px 15px;
-            }
-
-            .contact-common a {
-                display: block;
-                margin-top: 10px;
-                margin-left: 0;
-            }
-
-            .product-card {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution Code à Barre – Alger &amp; Skikda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --dark: #0d1117;
+    --dark2: #161b22;
+    --orange: #f97316;
+    --orange-light: #fb923c;
+    --orange-glow: rgba(249,115,22,0.18);
+    --text: #e2e8f0;
+    --muted: #8b9aae;
+    --card: #1a2233;
+    --border: rgba(255,255,255,0.07);
+    --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+.navbar {
+    background: rgba(10,14,20,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(249,115,22,0.15);
+    padding: 0 5%;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+.logo { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.55rem; color: #fff; letter-spacing: -0.8px; display: flex; align-items: center; gap: 13px; text-decoration: none; }
+.logo-icon { width: 44px; height: 44px; background: linear-gradient(135deg, var(--orange) 0%, #ea580c 100%); border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; box-shadow: 0 6px 20px rgba(249,115,22,0.45); }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-text .logo-main { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.nav-links { list-style: none; display: flex; gap: 4px; align-items: center; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 8px 16px; border-radius: 9px; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 7px; }
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+.nav-links .btn-nav-ok { background: linear-gradient(135deg, var(--orange) 0%, #ea580c 100%); color: #fff !important; font-weight: 700; padding: 9px 20px; border-radius: 9px; box-shadow: 0 4px 18px rgba(249,115,22,0.4); font-size: 0.88rem; }
+.nav-links .btn-nav-ok:hover { background: linear-gradient(135deg, var(--orange-light) 0%, var(--orange) 100%); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(249,115,22,0.5); }
+.hero { min-height: 100vh; display: flex; align-items: center; padding: 90px 6% 60px; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 65% 50%, rgba(249,115,22,0.10) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(249,115,22,0.06) 0%, transparent 60%), linear-gradient(135deg, #0d1117 0%, #0f1620 100%); }
+.hero-bg::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%); }
+.hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1300px; margin: 0 auto; width: 100%; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--orange-glow); border: 1px solid rgba(249,115,22,0.3); color: var(--orange-light); font-size: 0.78rem; font-weight: 700; padding: 6px 14px; border-radius: 100px; margin-bottom: 28px; letter-spacing: 0.8px; text-transform: uppercase; }
+.pulse-dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; position: relative; flex-shrink: 0; }
+.pulse-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: rgba(34,197,94,0.3); animation: pulse 1.8s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0;transform:scale(2)} }
+.hero-title { font-family: 'Sora', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: #fff; margin-bottom: 24px; }
+.hero-title .accent { color: var(--orange); }
+.hero-desc { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin-bottom: 40px; line-height: 1.75; }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary { background: var(--orange); color: #fff; padding: 14px 30px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 25px rgba(249,115,22,0.35); }
+.btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 12px 35px rgba(249,115,22,0.45); }
+.btn-secondary { background: transparent; color: var(--text); padding: 14px 30px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 1px solid var(--border); transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+.hero-visual { position: relative; }
+.products-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; position: relative; }
+.products-showcase::before { content: ''; position: absolute; inset: -30px; background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(249,115,22,0.08) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+.prod-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; overflow: hidden; transition: all 0.3s; z-index: 1; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+.prod-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--orange), transparent); border-radius: 2px; }
+.prod-card:hover { transform: translateY(-5px); border-color: rgba(249,115,22,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.prod-card-icon { font-size: 2.6rem; line-height: 1; filter: drop-shadow(0 4px 12px rgba(249,115,22,0.3)); }
+.prod-card-svg { width: 54px; height: 54px; }
+.prod-card-name { font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700; color: #fff; text-align: center; line-height: 1.3; }
+.prod-card-tag { font-size: 0.65rem; color: var(--orange); background: var(--orange-glow); padding: 3px 9px; border-radius: 100px; font-weight: 700; }
+.prod-card-featured { grid-column: 1 / -1; flex-direction: row; gap: 18px; padding: 20px 24px; align-items: center; background: linear-gradient(135deg, #1e2a3a 0%, var(--card) 100%); }
+.prod-card-featured .prod-card-icon { font-size: 3rem; }
+.prod-card-featured-text { display: flex; flex-direction: column; gap: 5px; }
+.prod-card-featured .prod-card-name { font-size: 1rem; text-align: left; }
+.prod-card-featured .prod-card-tag { width: fit-content; }
+.prod-card-status { display: flex; align-items: center; gap: 5px; font-size: 0.65rem; color: #22c55e; font-weight: 600; margin-top: 2px; }
+.prod-card-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+.hero-stat { position: absolute; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 11px 16px; display: flex; align-items: center; gap: 11px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(10px); z-index: 2; }
+.hero-stat-left { bottom: -20px; left: -30px; }
+.hero-stat-right { top: -20px; right: -20px; }
+.stat-icon { font-size: 1.4rem; }
+.stat-val { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.95rem; color: #fff; }
+.stat-label { font-size: 0.7rem; color: var(--muted); }
+.section-wrap { max-width: 1300px; margin: 0 auto; padding: 80px 6%; }
+.section-label { display: inline-flex; align-items: center; gap: 8px; color: var(--orange); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.section-label::before { content: ''; width: 22px; height: 2px; background: var(--orange); border-radius: 2px; }
+.section-title { font-family: 'Sora', sans-serif; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; color: #fff; margin-bottom: 40px; line-height: 1.2; letter-spacing: -0.5px; }
+.cat-filter { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 36px; }
+.cat-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.cat-btn:hover { color: #fff; border-color: rgba(249,115,22,0.4); }
+.cat-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 18px; }
+.product-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; transition: all 0.3s; position: relative; overflow: hidden; }
+.product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--orange); transform: scaleX(0); transition: transform 0.3s; border-radius: 3px 3px 0 0; }
+.product-card:hover { transform: translateY(-6px); border-color: rgba(249,115,22,0.25); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.product-card:hover::before { transform: scaleX(1); }
+.product-emoji { font-size: 2rem; margin-bottom: 14px; display: block; }
+.prod-tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--orange); margin-bottom: 8px; opacity: 0.85; }
+.product-card h3 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 9px; }
+.product-card p { color: var(--muted); font-size: 0.875rem; line-height: 1.7; }
+.ouedkniss-banner { background: linear-gradient(135deg, #1a2233 0%, #0f1620 100%); border: 1px solid rgba(249,115,22,0.2); border-radius: var(--radius); padding: 38px; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; overflow: hidden; }
+.ouedkniss-banner::before { content: ''; position: absolute; right: -60px; top: -60px; width: 250px; height: 250px; background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%); pointer-events: none; }
+.ouedkniss-text h3 { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 7px; }
+.ouedkniss-text p { color: var(--muted); font-size: 0.93rem; }
+.btn-ouedkniss-main { background: var(--orange); color: #fff; padding: 14px 26px; border-radius: 10px; font-weight: 700; font-size: 0.93rem; text-decoration: none; white-space: nowrap; transition: all 0.25s; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 25px rgba(249,115,22,0.35); flex-shrink: 0; }
+.btn-ouedkniss-main:hover { background: var(--orange-light); transform: translateY(-2px); }
+.contact-global { background: linear-gradient(135deg, var(--orange) 0%, #ea580c 100%); border-radius: var(--radius); padding: 26px 36px; display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 28px; box-shadow: 0 12px 40px rgba(249,115,22,0.35); flex-wrap: wrap; text-align: center; }
+.contact-global p { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 600; color: rgba(255,255,255,0.85); }
+.contact-global a { font-family: 'Sora', sans-serif; color: #fff; font-size: 1.35rem; font-weight: 800; text-decoration: none; letter-spacing: 0.5px; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+.contact-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 34px 28px; transition: transform 0.3s; }
+.contact-card:hover { transform: translateY(-5px); }
+.contact-card h3 { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 9px; }
+.contact-card ul { list-style: none; }
+.contact-card ul li { margin-bottom: 15px; display: flex; align-items: center; gap: 13px; font-size: 0.95rem; color: var(--muted); }
+.contact-card ul li .ci { font-size: 1.15rem; }
+.contact-card a { color: var(--text); text-decoration: none; font-weight: 500; transition: color 0.2s; word-break: break-all; }
+.contact-card a:hover { color: var(--orange); }
+.maps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+.map-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.map-box h3 { font-family: 'Sora', sans-serif; padding: 17px 20px; font-size: 0.98rem; font-weight: 700; color: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+.map-box iframe { width: 100%; height: 370px; border: none; display: block; }
+footer { background: var(--dark2); border-top: 1px solid var(--border); text-align: center; padding: 34px 24px; }
+.footer-logo { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 9px; }
+.footer-logo span { color: var(--orange); }
+footer p { color: var(--muted); font-size: 0.87rem; }
+footer a { color: var(--orange); text-decoration: none; }
+.section-divider { height: 1px; background: var(--border); max-width: 1300px; margin: 0 auto; }
+.drivers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.driver-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.driver-group-header { background: linear-gradient(135deg, #1e2d3d 0%, #161b22 100%); padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.driver-group-icon { font-size: 1.6rem; }
+.driver-group-title { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; }
+.driver-group-subtitle { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.driver-list { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.driver-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; transition: all 0.2s; gap: 12px; }
+.driver-item:hover { background: rgba(249,115,22,0.06); border-color: rgba(249,115,22,0.2); }
+.driver-info { display: flex; align-items: center; gap: 10px; }
+.driver-brand-icon { font-size: 1.2rem; width: 32px; text-align: center; }
+.driver-name { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 700; color: #fff; }
+.btn-dl { background: var(--orange); color: #fff; border: none; border-radius: 8px; padding: 7px 16px; font-size: 0.78rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.btn-dl:hover { background: var(--orange-light); transform: translateY(-1px); }
+.btn-dl-disabled { background: rgba(255,255,255,0.07); color: var(--muted); border: 1px dashed rgba(255,255,255,0.12); cursor: not-allowed; }
+.btn-dl-disabled:hover { background: rgba(255,255,255,0.07); transform: none; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.hero-left > * { animation: fadeUp 0.7s ease both; }
+.hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+.hero-left > *:nth-child(4) { animation-delay: 0.45s; }
+.hero-visual { animation: fadeUp 0.8s 0.3s ease both; }
+@media (max-width: 900px) { .hero-content { grid-template-columns: 1fr; gap: 50px; } .hero-visual { order: -1; } .hero-stat-left { bottom: -15px; left: -10px; } .hero-stat-right { top: -15px; right: -10px; } }
+@media (max-width: 700px) { .navbar { padding: 0 4%; height: auto; min-height: 70px; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 10px; } .nav-links { gap: 3px; } .nav-links a { padding: 6px 9px; font-size: 0.78rem; } .hero { padding: 95px 4% 50px; } .section-wrap { padding: 60px 4%; } .ouedkniss-banner { flex-direction: column; text-align: center; } .contact-global { flex-direction: column; gap: 10px; } .hero-stat { display: none; } }
+@media (max-width: 480px) { .nav-links .btn-nav-ok { display: none; } }
+</style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <h1>Solution <span>Code à Barre</span></h1>
-        <ul>
-            <li><a href="#products">Nos Produits</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#locations">Nos Magasins</a></li>
-        </ul>
-    </nav>
+<nav class="navbar">
+    <a href="#" class="logo">
+        <div class="logo-icon">🏷️</div>
+        <div class="logo-text">
+            <span class="logo-main">Solution <span style="color:var(--orange)">Code à Barre</span></span>
+        </div>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#produits">📦 Produits</a></li>
+        <li><a href="#drivers">💾 Drivers</a></li>
+        <li><a href="#utilitaires">🔧 Utilitaires</a></li>
+        <li><a href="#config-scanner">🔍 Config. Scanner</a></li>
+        <li><a href="#contact">📞 Contact</a></li>
+        <li><a href="#magasins">📍 Magasins</a></li>
+        <li><a href="https://www.ouedkniss.com/store/2090/systeme-code-a-barre/accueil" target="_blank" class="btn-nav-ok">🛒 Ouedkniss</a></li>
+    </ul>
+</nav>
 
-    <div class="content-wrapper">
-
-        <h2 id="products" class="section-title">Nos Produits</h2>
-
-        <div class="products-grid">
-            <div class="product-card">
-                <h3>🖨️ Imprimantes Ticket de Caisse</h3>
-                <p>Idéales pour les points de vente, supermarchés et restaurants. Impression thermique rapide et fiable.</p>
-            </div>
-            
-            <div class="product-card">
-                <h3>🔍 Douchettes Code à Barre</h3>
-                <p>Lecteurs portables ergonomiques pour un scan rapide et précis de vos articles en caisse ou en stock.</p>
-            </div>
-            
-            <div class="product-card">
-                <h3>📟 Scanners Code à Barre</h3>
-                <p>Scanners de bureau omnidirectionnels haute performance, parfaits pour les supermarchés à fort trafic.</p>
-            </div>
-            
-            <div class="product-card">
-                <h3>🏷️ Imprimantes Code à Barre</h3>
-                <p>Imprimez vos propres étiquettes avec précision pour une gestion de stock optimale.</p>
-            </div>
-            
-            <div class="product-card">
-                <h3>📜 Étiquettes</h3>
-                <p>Rouleaux d'étiquettes thermiques et papier de différentes tailles, adaptables à toutes vos imprimantes.</p>
-            </div>
-            
-            <div class="product-card">
-                <h3>⚖️ Balances Code à Barre</h3>
-                <p>Balances professionnelles avec impression de codes à barres uniquement, idéales pour la pesée en rayon et boucherie.</p>
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <div class="hero-left">
+            <div class="hero-badge"><div class="pulse-dot"></div>Alger &amp; Skikda — Algérie</div>
+            <h1 class="hero-title">Votre Partenaire<br><span class="accent">POS &amp; Code-Barres</span><br>de Confiance</h1>
+            <p class="hero-desc">Imprimantes, scanners, balances et systèmes de caisse — tout ce dont vous avez besoin pour digitaliser votre point de vente avec fiabilité et rapidité.</p>
+            <div class="hero-ctas">
+                <a href="#contact" class="btn-primary">📞 Nous Contacter</a>
+                <a href="https://www.ouedkniss.com/store/2090/systeme-code-a-barre/accueil" target="_blank" class="btn-secondary">🛒 Voir sur Ouedkniss</a>
             </div>
         </div>
-
-        <h2 id="contact" class="section-title">Contactez-nous</h2>
-
-        <div class="contact-container">
-            <div class="contact-common">
-                📞 Ligne Globale (Alger / Skikda) : <a href="tel:0556236219">0556 23 62 19</a>
-            </div>
-
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <h3>📍 Magasin Alger</h3>
-                    <ul>
-                        <li><span>📞</span> <a href="tel:0770727124">0770 72 71 24</a></li>
-                        <li><span>📞</span> <a href="tel:0770727157">0770 72 71 57</a></li>
-                        <li><span>✉️</span> <a href="mailto:systeme.code.a.barre16@gmail.com">systeme.code.a.barre16@gmail.com</a></li>
-                    </ul>
+        <div class="hero-visual">
+                <div class="products-showcase">
+                    <div class="prod-card prod-card-featured">
+                        <div class="prod-card-icon">🖥️</div>
+                        <div class="prod-card-featured-text">
+                            <div class="prod-card-tag">POS &amp; Caisse</div>
+                            <div class="prod-card-name">All-in-One</div>
+                            <div class="prod-card-status">Disponible en stock</div>
+                        </div>
+                    </div>
+                    <div class="prod-card">
+                        <div class="prod-card-icon">🏷️</div>
+                        <div class="prod-card-tag">Étiquettes</div>
+                        <div class="prod-card-name">Imprimante<br>Code-Barres</div>
+                    </div>
+                    <div class="prod-card">
+                        <div class="prod-card-icon">🔍</div>
+                        <div class="prod-card-tag">Lecture</div>
+                        <div class="prod-card-name">Scanner<br>Code-Barres</div>
+                    </div>
+                    <div class="prod-card">
+                        <div class="prod-card-icon">🧾</div>
+                        <div class="prod-card-tag">Caisse</div>
+                        <div class="prod-card-name">Imprimante<br>Ticket de Caisse</div>
+                    </div>
+                    <div class="prod-card">
+                        <div class="prod-card-icon">⚖️</div>
+                        <div class="prod-card-tag">Pesée</div>
+                        <div class="prod-card-name">Balance<br>avec Imprimante</div>
+                    </div>
                 </div>
-
-                <div class="contact-card">
-                    <h3>📍 Magasin Skikda</h3>
-                    <ul>
-                        <li><span>📞</span> <a href="tel:0770727167">0770 72 71 67</a></li>
-                        <li><span>✉️</span> <a href="mailto:solution.code.a.barre@gmail.com">solution.code.a.barre@gmail.com</a></li>
-                    </ul>
-                </div>
-            </div>
+            <div class="hero-stat hero-stat-left"><span class="stat-icon">⚡</span><div><div class="stat-val">Scan &lt; 0,1 s</div><div class="stat-label">Vitesse de lecture</div></div></div>
+            <div class="hero-stat hero-stat-right"><span class="stat-icon">🛡️</span><div><div class="stat-val">Garantie incluse</div><div class="stat-label">SAV disponible</div></div></div>
         </div>
+    </div>
+</section>
 
-        <h2 id="locations" class="section-title">Nos Magasins</h2>
+<div class="section-divider"></div>
+
+<section class="section-wrap">
+    <div id="produits">
+        <div class="section-label">Catalogue complet</div>
+        <h2 class="section-title">Nos Produits</h2>
+    </div>
+    <div class="cat-filter">
+        <button class="cat-btn active" data-cat="all">Tout afficher</button>
+        <button class="cat-btn" data-cat="pos">🖥️ POS &amp; Caisse</button>
+        <button class="cat-btn" data-cat="scan">🖲️ Scanners &amp; Lecteurs</button>
+        <button class="cat-btn" data-cat="print">🖨️ Imprimantes</button>
+        <button class="cat-btn" data-cat="rfid">📡 RFID &amp; Badges</button>
+        <button class="cat-btn" data-cat="paper">📄 Papier &amp; Consommables</button>
+        <button class="cat-btn" data-cat="balance">⚖️ Balances &amp; Comptage</button>
+        <button class="cat-btn" data-cat="access">🔌 Accessoires &amp; Câbles</button>
+    </div>
+    <div class="products-grid" id="productsGrid">
+        <div class="product-card" data-cat="pos"><span class="product-emoji">🖥️</span><div class="prod-tag">POS &amp; Caisse</div><h3>All-in-One</h3><p>Terminal POS intégrant écran tactile, imprimante et lecteur de codes-barres — solution complète clé en main pour votre point de vente.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">📱</span><div class="prod-tag">POS &amp; Caisse</div><h3>Terminal Portable (PDA)</h3><p>Terminal portable avec scanner intégré pour la gestion des stocks, la prise de commandes en salle et l'inventaire terrain.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">🖱️</span><div class="prod-tag">POS &amp; Caisse</div><h3>Écran Tactile &amp; Mini-Unité</h3><p>Écrans tactiles capacitifs et mini-PC compacts pour équiper vos postes de caisse avec performance et discrétion.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">📺</span><div class="prod-tag">POS &amp; Caisse</div><h3>Écran Client (Afficheur)</h3><p>Afficheur secondaire LCD ou VFD pour informer le client du montant en temps réel lors du passage en caisse.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">🗄️</span><div class="prod-tag">POS &amp; Caisse</div><h3>Tiroir-Caisse</h3><p>Tiroir-caisse robuste à ouverture automatique, compartiments billets et pièces, compatible avec toutes les imprimantes de tickets.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">⌨️</span><div class="prod-tag">POS &amp; Caisse</div><h3>Clavier &amp; Souris</h3><p>Claviers filaires ou sans fil et souris ergonomiques compatibles avec tous les systèmes POS et postes informatiques.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">🟦</span><div class="prod-tag">POS &amp; Caisse</div><h3>Tapis de Souris</h3><p>Tapis de souris professionnels antidérapants, disponibles en différentes tailles et matières pour une utilisation quotidienne.</p></div>
+        <div class="product-card" data-cat="pos"><span class="product-emoji">🖥️</span><div class="prod-tag">POS &amp; Caisse</div><h3>Matériel Informatique</h3><p>PC de bureau, écrans, périphériques et tout le matériel informatique nécessaire à votre infrastructure de vente.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">🔍</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Douchette Filaire</h3><p>Lecteur de codes-barres filaire USB ou RS232, ergonomique et robuste, idéal pour une utilisation intensive en caisse.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">🔎</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Douchette Sans Fil</h3><p>Lecteur Bluetooth ou 2,4 GHz avec base de charge — liberté de mouvement totale pour la caisse ou l'inventaire.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">🎫</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Escargo — Distributeur de Tickets</h3><p>Distributeur automatique de tickets numérotés pour la gestion des files d'attente — idéal pour les banques, administrations, pharmacies et commerces.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">🔭</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Scanner Fixe de Présentation</h3><p>Scanner de bureau à présentation automatique pour une lecture fluide et rapide en caisse sans effort de l'opérateur.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">📶</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Lecteur RFID / Mifare</h3><p>Lecteur de cartes RFID et Mifare 13,56 MHz pour contrôle d'accès, badgeuse, paiement sans contact et gestion de membres.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">👤</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Pointeuse Faciale</h3><p>Terminal de présence biométrique par reconnaissance faciale — gestion des horaires précise, sans contact et infalsifiable.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">🖐️</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Pointeuse Empreinte / Badge</h3><p>Terminal biométrique par empreinte digitale ou badge RFID pour la gestion fiable des présences du personnel.</p></div>
+        <div class="product-card" data-cat="print"><span class="product-emoji">🧾</span><div class="prod-tag">Imprimantes</div><h3>Imprimante de Tickets 80 mm</h3><p>Imprimante thermique directe 80 mm — impression rapide et silencieuse pour tout point de vente, restaurant ou supermarché.</p></div>
+        <div class="product-card" data-cat="print"><span class="product-emoji">📱</span><div class="prod-tag">Imprimantes</div><h3>Imprimante Mobile 80 mm</h3><p>Imprimante thermique portable Bluetooth pour les livreurs, les commerciaux terrain et la restauration à domicile.</p></div>
+        <div class="product-card" data-cat="print"><span class="product-emoji">🏷️</span><div class="prod-tag">Imprimantes</div><h3>Imprimante d'Étiquettes (Thermique Directe)</h3><p>Imprimante compacte pour étiquettes codes-barres thermique directe — simple, rapide et économique pour petits volumes.</p></div>
+        <div class="product-card" data-cat="print"><span class="product-emoji">🏭</span><div class="prod-tag">Imprimantes</div><h3>Imprimante d'Étiquettes (Transfert Thermique)</h3><p>Imprimante à transfert thermique pour étiquettes codes-barres haute durabilité — résistance garantie à l'humidité, aux UV et aux frottements.</p></div>
+        <div class="product-card" data-cat="print"><span class="product-emoji">🪪</span><div class="prod-tag">Imprimantes</div><h3>Badgeuse (Imprimante de Cartes PVC)</h3><p>Imprimez vos cartes de membre, badges d'entreprise, cartes de fidélité et cartes d'accès en PVC format carte bancaire.</p></div>
+        <div class="product-card" data-cat="rfid"><span class="product-emoji">📛</span><div class="prod-tag">RFID &amp; Badges</div><h3>Badges PVC</h3><p>Badges PVC rigides avec impression recto verso, clip ou lacet inclus — pour le personnel, les visiteurs et le contrôle d'accès.</p></div>
+        <div class="product-card" data-cat="rfid"><span class="product-emoji">🏷️</span><div class="prod-tag">RFID &amp; Badges</div><h3>Tags RFID</h3><p>Tags RFID autocollants, rigides ou souples pour la traçabilité d'inventaire, le contrôle d'accès et la gestion d'actifs.</p></div>
+        <div class="product-card" data-cat="rfid"><span class="product-emoji">⌚</span><div class="prod-tag">RFID &amp; Badges</div><h3>Bracelets RFID</h3><p>Bracelets RFID étanches en silicone ou en tissu pour piscines, hôtels, parcs de loisirs, événements et espaces sécurisés.</p></div>
+        <div class="product-card" data-cat="rfid"><span class="product-emoji">💳</span><div class="prod-tag">RFID &amp; Badges</div><h3>Cartes PVC Vierges / Mifare</h3><p>Cartes PVC vierges ou avec puce RFID/Mifare intégrée pour badges d'accès, cartes de fidélité et titres de transport.</p></div>
+        <div class="product-card" data-cat="rfid"><span class="product-emoji">🖨️</span><div class="prod-tag">RFID &amp; Badges</div><h3>Rubans d'Impression pour Cartes PVC</h3><p>Rubans couleur YMCKO et monochrome pour imprimantes à cartes PVC — haute qualité d'impression et longue durée de vie.</p></div>
+        <div class="product-card" data-cat="rfid"><span class="product-emoji">🪪</span><div class="prod-tag">RFID &amp; Badges</div><h3>Porte-Badges &amp; Lacets</h3><p>Porte-badges rigides, pochettes souples, lacets et clips pour l'affichage et le port des badges en toutes circonstances.</p></div>
+        <div class="product-card" data-cat="paper"><span class="product-emoji">🧻</span><div class="prod-tag">Papier &amp; Consommables</div><h3>Papier Thermique 80 × 75 mm</h3><p>Rouleaux de papier thermique 80 mm × 75 m pour imprimantes de tickets de caisse — haute qualité d'impression, longue conservation.</p></div>
+        <div class="product-card" data-cat="paper"><span class="product-emoji">🧻</span><div class="prod-tag">Papier &amp; Consommables</div><h3>Papier Thermique 57 × 40 mm</h3><p>Rouleaux 57 mm × 40 m pour imprimantes mobiles et terminaux de paiement — vendus par carton.</p></div>
+        <div class="product-card" data-cat="paper"><span class="product-emoji">🧻</span><div class="prod-tag">Papier &amp; Consommables</div><h3>Papier Thermique 35 × 45 mm</h3><p>Rouleaux 35 mm pour calculatrices à imprimante, petits terminaux et appareils de mesure compacts.</p></div>
+        <div class="product-card" data-cat="paper"><span class="product-emoji">📋</span><div class="prod-tag">Papier &amp; Consommables</div><h3>Étiquettes Thermiques Directes</h3><p>Étiquettes en papier thermique direct en différentes dimensions — compatibles avec toutes les imprimantes d'étiquettes du marché.</p></div>
+        <div class="product-card" data-cat="paper"><span class="product-emoji">✨</span><div class="prod-tag">Papier &amp; Consommables</div><h3>Étiquettes PVC &amp; Mat</h3><p>Étiquettes en PVC brillant ou en papier mat pour une meilleure résistance à l'humidité, aux huiles et aux environnements exigeants.</p></div>
+        <div class="product-card" data-cat="balance"><span class="product-emoji">⚖️</span><div class="prod-tag">Balances &amp; Comptage</div><h3>Balance avec Imprimante de Codes-Barres</h3><p>Balance professionnelle avec imprimante d'étiquettes codes-barres intégrée — idéale pour la boucherie, la fromagerie et le rayon frais.</p></div>
+        <div class="product-card" data-cat="balance"><span class="product-emoji">🔢</span><div class="prod-tag">Balances &amp; Comptage</div><h3>Balance Électronique</h3><p>Balance électronique simple pour la pesée au quotidien — affichage numérique précis, idéale pour les commerces et les marchés.</p></div>
+        <div class="product-card" data-cat="balance"><span class="product-emoji">💵</span><div class="prod-tag">Balances &amp; Comptage</div><h3>Compteuse de Billets</h3><p>Machine à compter les billets avec détection des faux billets par ultraviolets et détection magnétique — rapide et fiable.</p></div>
+        <div class="product-card" data-cat="balance"><span class="product-emoji">🔏</span><div class="prod-tag">Balances &amp; Comptage</div><h3>Détecteur de Faux Billets</h3><p>Détecteur ultraviolet UV/MG portable ou de comptoir pour vérifier l'authenticité des billets de banque en toute rapidité.</p></div>
+        <div class="product-card" data-cat="access"><span class="product-emoji">🔌</span><div class="prod-tag">Accessoires &amp; Câbles</div><h3>Câbles d'Alimentation</h3><p>Câbles d'alimentation, adaptateurs et blocs secteur compatibles avec l'ensemble des équipements POS et périphériques informatiques.</p></div>
+        <div class="product-card" data-cat="access"><span class="product-emoji">🖥️</span><div class="prod-tag">Accessoires &amp; Câbles</div><h3>Câbles Vidéo — VGA / DisplayPort / HDMI</h3><p>Câbles vidéo de différentes longueurs pour connecter écrans, afficheurs clients et moniteurs à votre système de caisse.</p></div>
+        <div class="product-card" data-cat="access"><span class="product-emoji">🔗</span><div class="prod-tag">Accessoires &amp; Câbles</div><h3>Câbles Réseau &amp; USB</h3><p>Câbles Ethernet RJ45, USB-A, USB-B, USB-C et câbles série RS232 pour toutes vos connexions d'équipements professionnels.</p></div>
+        <div class="product-card" data-cat="access"><span class="product-emoji">🛠️</span><div class="prod-tag">Accessoires &amp; Câbles</div><h3>Accessoires Divers</h3><p>Supports, socles, protections d'écran, chargeurs, interfaces et pièces de rechange pour maintenir vos équipements en parfait état.</p></div>
+        <div class="product-card" data-cat="scan"><span class="product-emoji">💳</span><div class="prod-tag">Scanners &amp; Lecteurs</div><h3>Lecteur Carte Chifa</h3><p>Lecteur de carte Chifa compatible avec les logiciels de gestion des pharmacies et des cabinets médicaux — connexion USB, plug &amp; play.</p></div>
+    </div>
+</section>
+
+<script>
+(function(){var btns=document.querySelectorAll('.cat-btn');var cards=document.querySelectorAll('.product-card[data-cat]');btns.forEach(function(btn){btn.addEventListener('click',function(){btns.forEach(function(b){b.classList.remove('active')});btn.classList.add('active');var cat=btn.getAttribute('data-cat');cards.forEach(function(card){card.style.display=(cat==='all'||card.getAttribute('data-cat')===cat)?'':'none'})})})})();
+</script>
+
+<div class="section-wrap" style="padding-top:0;padding-bottom:80px;">
+    <div class="ouedkniss-banner">
+        <div class="ouedkniss-text">
+            <h3>🛒 Retrouvez-nous sur Ouedkniss</h3>
+            <p>Parcourez notre catalogue complet, comparez les prix et contactez-nous directement via notre boutique officielle.</p>
+        </div>
+        <a href="https://www.ouedkniss.com/store/2090/systeme-code-a-barre/accueil" target="_blank" class="btn-ouedkniss-main">Visiter notre boutique →</a>
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<section class="section-wrap">
+    <div id="drivers">
+        <div class="section-label">Téléchargements</div>
+        <h2 class="section-title">Drivers, Logiciels &amp; Utilitaires</h2>
+    </div>
+    <div class="drivers-grid">
+
         
-        <div class="maps-grid">
-            <div class="map-box">
-                <h3>📍 Magasin Alger</h3>
-                <iframe src="https://maps.google.com/maps?q=36.722667,3.165167&hl=fr&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="driver-group">
+            <div class="driver-group-header">
+                <span class="driver-group-icon">🖨️</span>
+                <div>
+                    <div class="driver-group-title">Drivers — Imprimantes Ticket de Caisse</div>
+                    <div class="driver-group-subtitle">Imprimantes thermiques 58 mm / 80 mm</div>
+                </div>
             </div>
+            <div class="driver-list">
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">BZBOS</div></div></div>
+                    <a href="https://www.mediafire.com/file/h0ry19y6ddafnla/BZBOS_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">Gprinter</div></div></div>
+                    <a href="https://www.mediafire.com/file/woiqfdsgozelaqg/Gprinter_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">Poslux B80</div></div></div>
+                    <a href="https://www.mediafire.com/file/3t0wxr2ovfps0hf/Poslux_B80_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">Poslux Z800 / L300 / K600 / MP80</div></div></div>
+                    <a href="https://www.mediafire.com/file/w9vc0yr0tbo1c24/Poslux_Z800-L300-K600-MP80_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">Rongta</div></div></div>
+                    <a href="https://www.mediafire.com/file/rjl33jp9uqx82zp/Rongta_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">SPRT</div></div></div>
+                    <a href="https://www.mediafire.com/file/y3o7zod9zq2dnd4/SPRT_Driver.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">Tysso</div></div></div>
+                    <a href="https://www.mediafire.com/file/rkhqxd5atpvx19w/Tysso_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">XPrinter</div></div></div>
+                    <a href="https://www.mediafire.com/file/4j16ujuno4ieylu/XPrinter_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+            </div>
+        </div>
 
-            <div class="map-box">
-                <h3>📍 Magasin Skikda</h3>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.6268077645313!2d6.909657974702161!3d36.87535066346155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f1c54e3c2e5a4f%3A0x3b7419ca78bb3f1b!2sMagasin%20Solution%20Code%20%C3%A0%20Barre!5e0!3m2!1sfr!2sdz!4v1773067472279!5m2!1sfr!2sdz" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        
+        <div class="driver-group">
+            <div class="driver-group-header">
+                <span class="driver-group-icon">🏷️</span>
+                <div>
+                    <div class="driver-group-title">Drivers — Imprimantes Code-Barres</div>
+                    <div class="driver-group-subtitle">Transfert thermique &amp; thermique directe (NiceLabel)</div>
+                </div>
+            </div>
+            <div class="driver-list">
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">4Barcode</div></div></div>
+                    <a href="https://www.mediafire.com/file/9su9grydn5ulewt/4BARCODE_11.5.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Godex</div></div></div>
+                    <a href="https://www.mediafire.com/file/c9m39jc3niw3s5t/Godex_5.5.1.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Gprinter</div></div></div>
+                    <a href="https://www.mediafire.com/file/seegawz3ewzf06z/Gprinter_10.6.12.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Honeywell</div></div></div>
+                    <a href="https://www.mediafire.com/file/r81v25qgghwn62e/Honeywell_10.6.14.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Poslux LP430</div></div></div>
+                    <a href="https://www.mediafire.com/file/rv1cfyeb701xoo9/Poslux_LP430.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Poslux T810</div></div></div>
+                    <a href="https://www.mediafire.com/file/g40egnv308sq2ot/Poslux_T810.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Poslux Z900-LP80</div></div></div>
+                    <a href="https://www.mediafire.com/file/48mj448htlsnm3h/Poslux_Z900-LP80.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Postek</div></div></div>
+                    <a href="https://www.mediafire.com/file/k9myu4ni04fxmu7/Postek_5.5.5.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">Rongta</div></div></div>
+                    <a href="https://www.mediafire.com/file/ba1i5rfjfj99waf/Rongta_5.5.0.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🏷️</span><div><div class="driver-name">TSC</div></div></div>
+                    <a href="https://www.mediafire.com/file/ihnaz23aayrf3z1/Tsc_10.6.12.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="driver-group">
+            <div class="driver-group-header">
+                <span class="driver-group-icon">🪪</span>
+                <div>
+                    <div class="driver-group-title">Drivers — Badgeuse (Cartes PVC)</div>
+                    <div class="driver-group-subtitle">Impression de badges et cartes PVC</div>
+                </div>
+            </div>
+            <div class="driver-list">
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🪪</span><div><div class="driver-name">Pointman</div></div></div>
+                    <a href="https://www.mediafire.com/file/fwo54r3y9dysaf8/Pointman_Driver.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🪪</span><div><div class="driver-name">Seaory</div></div></div>
+                    <a href="https://www.mediafire.com/file/ovzy2d90utbthvl/Seaory_Driver.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="driver-group">
+            <div class="driver-group-header">
+                <span class="driver-group-icon">🎨</span>
+                <div>
+                    <div class="driver-group-title">Logiciels d'Impression d'Étiquettes</div>
+                    <div class="driver-group-subtitle">NiceLabel · LabelShop · BarTender UltraLite</div>
+                </div>
+            </div>
+            <div class="driver-list">
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">NiceLabelDesignerSE6 — Rongta</div></div></div>
+                    <a href="https://www.mediafire.com/file/cycyu9tygy19qmr/NiceLabelDesignerSE6_for_Rongta.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">LabelShop — Gprinter</div></div></div>
+                    <a href="https://www.mediafire.com/file/ve0qtnfrhdxmm3i/LabelShop_for_GP.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">BarTender UltraLite — 4Barcode</div></div></div>
+                    <a href="https://www.mediafire.com/file/l8qnojweai8nmpm/BarTender_UltraLite_for_4Barcode.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">BarTender UltraLite — iDPRT</div></div></div>
+                    <a href="https://www.mediafire.com/file/jzpwdx3szbxgm33/BarTender_UltraLite_for_iDPRT.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">BarTender UltraLite — Postek</div></div></div>
+                    <a href="https://www.mediafire.com/file/1rebr1dro34d8at/BarTender_UltraLite_for_Postek.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">BarTender UltraLite — TSC</div></div></div>
+                    <a href="https://www.mediafire.com/file/2p3jiy0n67ywt72/BarTender_UltraLite_for_TSC.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🎨</span><div><div class="driver-name">BarTender UltraLite — Xprinter</div></div></div>
+                    <a href="https://www.mediafire.com/file/8lcikwayls202kg/BarTender_UltraLite_for_Xprinter.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="utilitaires" class="driver-group">
+            <div class="driver-group-header">
+                <span class="driver-group-icon">🔧</span>
+                <div>
+                    <div class="driver-group-title">Outils &amp; Utilitaires</div>
+                    <div class="driver-group-subtitle">Configuration, paramétrage et réglages</div>
+                </div>
+            </div>
+            <div class="driver-list">
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🔌</span><div><div class="driver-name">Adaptateur Rj11-USB — POSITIVE UTP100</div></div></div>
+                    <a href="https://www.mediafire.com/file/jjwtb1ulmwtj0r2/Adaptateur_Rj11-USB_--POSITIVE_UTP100.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">📺</span><div><div class="driver-name">Afficheur HP Driver</div></div></div>
+                    <a href="https://www.mediafire.com/file/0srmkgvkqh51qd9/Afficheur_HP_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">📺</span><div><div class="driver-name">Afficheur Positive Driver</div></div></div>
+                    <a href="https://www.mediafire.com/file/ylkm36p2w2ytdqy/Afficheur_Positive_Driver.exe/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">📶</span><div><div class="driver-name">Bluetooth Setting Tool IMM</div></div></div>
+                    <a href="https://www.mediafire.com/file/l4qmb0hhovwosuv/Bluetooth_Setting_Tool_IMM.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">⌨️</span><div><div class="driver-name">Clavier Programmable Rongta</div></div></div>
+                    <a href="https://www.mediafire.com/file/dps56au8utanxjp/Clavier_programmable_Rongta.zip/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖥️</span><div><div class="driver-name">ELITEPOSE v5.14.0.19810 Driver</div></div></div>
+                    <a href="https://www.mediafire.com/file/9akpzq8be8zf9rz/ELITEPOSE_v5.14.0.19810_DRIVER.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🖨️</span><div><div class="driver-name">Xprinter Tool</div></div></div>
+                    <a href="https://www.mediafire.com/file/0j8brpb9uq8xxr7/Xprinter_Tool.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="config-scanner" class="driver-group">
+            <div class="driver-group-header" style="background: linear-gradient(135deg, #1a2d1e 0%, #161b22 100%);">
+                <span class="driver-group-icon">🔍</span>
+                <div>
+                    <div class="driver-group-title">Configuration Scanner</div>
+                    <div class="driver-group-subtitle">Feuille de configuration &amp; paramétrage scanner codes-barres — Smartpos</div>
+                </div>
+            </div>
+            <div class="driver-list">
+                <div class="driver-item">
+                    <div class="driver-info"><span class="driver-brand-icon">🔍</span><div><div class="driver-name">Smartpos</div><div style="font-size:0.75rem;color:var(--muted);margin-top:2px;">Configuration &amp; paramétrage scanner</div></div></div>
+                    <a href="https://www.mediafire.com/file/qjnx8h6b2rrpdx0/Smartpos.rar/file" class="btn-dl" target="_blank">⬇ Lien</a>
+                </div>
             </div>
         </div>
 
     </div>
+</section>
 
-    <footer>
-        <p>
+<div class="section-divider"></div>
+
+<section class="section-wrap">
+    <div id="contact">
+        <div class="section-label">Joignez-nous</div>
+        <h2 class="section-title">Contactez-nous</h2>
+    </div>
+    <div class="contact-global">
+        <p>📞 Ligne commune (Alger / Skikda) :</p>
+        <a href="tel:0556236219">0556 23 62 19</a>
+    </div>
+    <div class="contact-grid">
+        <div class="contact-card">
+            <h3>📍 Magasin d'Alger</h3>
+            <ul>
+                <li><span class="ci">📞</span><a href="tel:0770727124">0770 72 71 24</a></li>
+                <li><span class="ci">📞</span><a href="tel:0770727157">0770 72 71 57</a></li>
+                <li><span class="ci">✉️</span><a href="mailto:alger@solutioncodebarre.dz">alger@solutioncodebarre.dz</a></li>
+            </ul>
+        </div>
+        <div class="contact-card">
+            <h3>📍 Magasin de Skikda</h3>
+            <ul>
+                <li><span class="ci">📞</span><a href="tel:0770727167">0770 72 71 67</a></li>
+                <li><span class="ci">✉️</span><a href="mailto:skikda@solutioncodebarre.dz">skikda@solutioncodebarre.dz</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section class="section-wrap">
+    <div id="magasins">
+        <div class="section-label">Localisation</div>
+        <h2 class="section-title">Nos Magasins</h2>
+    </div>
+    <div class="maps-grid">
+        <div class="map-box">
+            <h3>📍 Magasin d'Alger</h3>
+            <iframe src="https://maps.google.com/maps?q=36.722667,3.165167&hl=fr&z=15&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="map-box">
+            <h3>📍 Magasin de Skikda</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.6268077645313!2d6.909657974702161!3d36.87535066346155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f1c54e3c2e5a4f%3A0x3b7419ca78bb3f1b!2sMagasin%20Solution%20Code%20%C3%A0%20Barre!5e0!3m2!1sfr!2sdz!4v1773319373035!5m2!1sfr!2sdz" allowfullscreen loading="lazy" refe
